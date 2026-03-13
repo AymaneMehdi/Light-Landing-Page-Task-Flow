@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: "Light Landing Page Task Flow",
   keywords: ["Light", "Landing", "Page", "Task", "Flow"],
   icons: {
-    icon: "/src/app/favicon.ico",
+    icon: "/favicon.ico",
   },
 };
 

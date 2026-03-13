@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import clsx from "clsx";
 
 const dmSans = DM_Sans({ subsets: ["latin"] });
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="en" className="relative">
       <body className={clsx(dmSans.className, "antialiased bg-[#EAEEFE]")}>
         {children}
+        <Analytics />
       </body>
     </html>
   );

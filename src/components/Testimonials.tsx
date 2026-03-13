@@ -1,3 +1,4 @@
+"use client";
 import avatar1 from "@/assets/avatar-1.png";
 import avatar2 from "@/assets/avatar-2.png";
 import avatar3 from "@/assets/avatar-3.png";
@@ -7,6 +8,10 @@ import avatar6 from "@/assets/avatar-6.png";
 import avatar7 from "@/assets/avatar-7.png";
 import avatar8 from "@/assets/avatar-8.png";
 import avatar9 from "@/assets/avatar-9.png";
+import Image from "next/image";
+import React, { use } from "react";
+import { twMerge } from "tailwind-merge";
+import { motion } from "framer-motion";
 
 const testimonials = [
   {
@@ -65,6 +70,98 @@ const testimonials = [
   },
 ];
 
+const firstColumn = testimonials.slice(0, 3);
+const secondColumn = testimonials.slice(3, 6);
+const thirdColumn = testimonials.slice(6, 9);
+
+const TestimonialsColumn = (props: {
+  className?: string;
+  testimonials: typeof testimonials;
+  duration?: number;
+}) => {
+  return (
+    <div className={props.className}>
+      <motion.div
+        animate={{
+          translateY: "-50%",
+        }}
+        transition={{
+          duration: props.duration || 10,
+          repeat: Infinity,
+          ease: "linear",
+          repeatType: "loop",
+        }}
+        className="flex flex-col gap-6 pb-6"
+      >
+        {[
+          ...new Array(2).fill(0).map((_, index) => (
+            <React.Fragment key={index}>
+              {props.testimonials.map(({ text, imageSrc, name, username }) => (
+                <div
+                  className="p-10 border rounded-3xl shadow-[0_7px_20px_rgba(0,0,0,0.12)] max-w-sm w-full"
+                  key={username}
+                >
+                  <div>{text}</div>
+                  <div className="flex items-center gap-2 mt-5">
+                    <Image
+                      width={40}
+                      height={40}
+                      src={imageSrc}
+                      alt={name}
+                      className="h-10 w-10 rounded-full"
+                    />
+                    <div className="flex flex-col">
+                      <div className="font-medium tracking-tight leading-5">
+                        {name}
+                      </div>
+                      <div className="leading-5 tracking-tight">{username}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </React.Fragment>
+          )),
+        ]}
+      </motion.div>
+    </div>
+  );
+};
+
 export const Testimonials = () => {
-  return null;
+  return (
+    <section className="bg-white py-24 -mb-24">
+      <div className="container">
+        <div className="max-w-[540px] mx-auto">
+          <div className="flex justify-center">
+            <div className="text-sm inline-flex border border-[#222]/10 px-3 py-1 rounded-lg tracking-tight">
+              Testimonials
+            </div>
+          </div>
+
+          <h2 className="text-center text-3xl font-bold tracking-tighter bg-gradient-to-b from-black to-[#001E80] text-transparent bg-clip-text mt-5 md:text-[54px] md:leading-[60px]">
+            What our users say
+          </h2>
+          <p className="text-center text-[22px] leading-[30px] tracking-tight text-[#010D3E] mt-5">
+            Effortlessly turn your ideas into a fully functional, responsive,
+            no-code SaaS website in just minutes with the set of free components
+            for Framer.
+          </p>
+        </div>
+
+        <div className="flex justify-center gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
+          <TestimonialsColumn testimonials={firstColumn} duration={15} />
+          <TestimonialsColumn
+            testimonials={secondColumn}
+            className="hidden md:flex"
+            duration={19}
+          />
+          <TestimonialsColumn
+            testimonials={thirdColumn}
+            className="hidden lg:flex"
+            duration={17}
+          />
+        </div>
+      </div>
+    </section>
+  );
 };
